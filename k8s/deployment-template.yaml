@@ -6,15 +6,15 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: image-catalog
+      app: gameplay
   template:
     metadata:
       labels:
-        app: image-catalog
+        app: gameplay
     spec:
       containers:
-        - image: prporso/image-catalog:test #to be changed
-          name: image-catalog
+        - image: kurtaga/gameplay:test #to be changed
+          name: gameplay
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
               value: #connection url
@@ -47,7 +47,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: image-catalog
+  name: gameplay
 spec:
   type: LoadBalancer
   ports:
@@ -55,4 +55,4 @@ spec:
       protocol: TCP
       targetPort: server
   selector:
-    app: image-catalog
+    app: gameplay

@@ -1,5 +1,5 @@
 kumuluzee:
-  name: image-catalog-service
+  name: gameplay-service
   env:
     name: dev
   version: 1.0.0
@@ -8,10 +8,10 @@ kumuluzee:
     http:
       port: 8080
   datasources:
-    - jndi-name: jdbc/ImageMetadataDS
-      connection-url: jdbc:postgresql://localhost:5432/image-metadata
-      username: dbuser
-      password: postgres
+    - jndi-name: jdbc/GameplayDS
+      connection-url: jdbc:postgresql://ep-royal-river-45970815.eu-central-1.aws.neon.tech/gameplay?user=tilenmiklavic&password=U65pDcNzgwuj&sslmode=require
+      username: tilenmiklavic
+      password: U65pDcNzgwuj
   health:
     checks:
       data-source-health-check:
@@ -19,8 +19,8 @@ kumuluzee:
         jndi-name: jdbc/ImageMetadataDS
   metrics:
     web-instrumentation:
-      - name: images-endpoint
-        url-pattern: /v1/images/*
+      - name: gameplay-endpoint
+        url-pattern: /v1/gameplay/*
   logs:
     config-file: '<?xml version="1.0" encoding="UTF-8"?>
                             <Configuration name="comments">
