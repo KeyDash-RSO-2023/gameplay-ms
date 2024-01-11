@@ -16,11 +16,11 @@ kumuluzee:
     checks:
       data-source-health-check:
         type: liveness
-        jndi-name: jdbc/ImageMetadataDS
+        jndi-name: jdbc/GameplayDS
   metrics:
     web-instrumentation:
       - name: gameplay-endpoint
-        url-pattern: /v1/gameplay/*
+        url-pattern: /v1/images/*
   logs:
     config-file: '<?xml version="1.0" encoding="UTF-8"?>
                             <Configuration name="comments">
