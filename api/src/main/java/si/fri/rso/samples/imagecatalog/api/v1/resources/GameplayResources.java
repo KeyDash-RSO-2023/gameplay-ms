@@ -14,6 +14,7 @@ import si.fri.rso.samples.imagecatalog.lib.TypingSession;
 import si.fri.rso.samples.imagecatalog.lib.TypingSessionProgress;
 import si.fri.rso.samples.imagecatalog.services.beans.TypingSessionBean;
 import si.fri.rso.samples.imagecatalog.services.services.GeneratorClient;
+import si.fri.rso.samples.imagecatalog.services.services.ReportClient;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -47,6 +48,8 @@ public class GameplayResources {
     // Create an instance of the GeneratorClient
     private GeneratorClient generatorClient = new GeneratorClient("http://localhost:807");
 
+    private ReportClient reportClient = new ReportClient("http://localhost:8080");
+
     private int MAX_ALLOWED_WPM = 80;
 
 
@@ -60,6 +63,9 @@ public class GameplayResources {
 
         // Create a new TypingSession object and set the text to type
         TypingSession ts = new TypingSession();
+        ts.setLanguage(language);
+        ts.setLength(length);
+        ts.setPunctuation(punctuation);
         ts.setTextToType(textToType);
 
         ts = typingSessionBean.createTypingSession(ts);
@@ -71,6 +77,7 @@ public class GameplayResources {
     @Path("/end/{typingSessionId}")
     public Response endTypingSession(@PathParam("typingSessionId") long typingSessionId, @RequestBody String typedText) {
         TypingSession ts = typingSessionBean.getTypingSession(typingSessionId);
+        System.out.println("when ending the session and getting typing session the wpm is " + ts.getWpm());
 
         if (ts == null) {
             // If the session doesn't exist, return a NOT FOUND response
@@ -78,6 +85,9 @@ public class GameplayResources {
         }
 
         TypingSession endedTs = typingSessionBean.endTypingSession(ts);
+
+        reportClient.saveTypingSession(endedTs);
+
         return typingSessionResponse(endedTs);
 
     }
@@ -87,6 +97,9 @@ public class GameplayResources {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateTypingSession(@PathParam("typingSessionId") long typingSessionId, TypingSessionProgress progress) {
+        System.out.println("updating session");
+        System.out.println(progress.getAccuracy());
+        System.out.println("wpm " + progress.getCurrentWpm());
         // Retrieve the existing typing session from the database
 
         TypingSession ts = typingSessionBean.getTypingSession(typingSessionId);

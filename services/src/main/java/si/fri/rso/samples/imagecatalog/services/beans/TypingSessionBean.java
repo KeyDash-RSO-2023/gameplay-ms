@@ -50,6 +50,8 @@ public class TypingSessionBean {
 
         TypingSessionEntity tsEntity = em.find(TypingSessionEntity.class, typingSessionId);
 
+        System.out.println("in the getter wpm is " + tsEntity.getWpm());
+
         if (tsEntity == null) {
             throw new NotFoundException();
         }
@@ -61,6 +63,8 @@ public class TypingSessionBean {
 
     public TypingSession updateTypingSession(TypingSession ts, boolean valid, double wpm, double accuracy) {
         TypingSessionEntity tsEntity = TypingSessionConverter.toEntity(ts);
+        TypingSessionEntity c = em.find(TypingSessionEntity.class, ts.getTypingSessionId());
+
 
         if (!valid) {
             tsEntity.setStatus("invalid");
@@ -69,11 +73,17 @@ public class TypingSessionBean {
         tsEntity.setWpm(wpm);
         tsEntity.setAccuracy(accuracy);
         tsEntity.setLastUpdateTime(Instant.now());
+        System.out.println("updating this id: " + ts.getTypingSessionId());
 
         try {
             beginTx();
-            em.persist(tsEntity);
+            tsEntity.setTypingSessionId(c.getTypingSessionId());
+            tsEntity = em.merge(tsEntity);
             commitTx();
+
+//            beginTx();
+//            em.persist(tsEntity);
+//            commitTx();
         }
         catch (Exception e) {
             rollbackTx();
@@ -85,20 +95,27 @@ public class TypingSessionBean {
     public TypingSession endTypingSession(TypingSession ts) {
 
         TypingSessionEntity tsEntity = TypingSessionConverter.toEntity(ts);
+        TypingSessionEntity c = em.find(TypingSessionEntity.class, ts.getTypingSessionId());
+
 
         tsEntity.setStatus("ended");
         tsEntity.setEndTime(Instant.now());
 
         try {
             beginTx();
-            em.persist(tsEntity);
+            tsEntity.setTypingSessionId(c.getTypingSessionId());
+            em.merge(tsEntity);
             commitTx();
         }
         catch (Exception e) {
             rollbackTx();
         }
 
+        System.out.println("the original wpm is " + tsEntity.getWpm());
+        System.out.println("when ending session and reading wpm its value is " + tsEntity.getWpm());
         TypingSession endedTs = TypingSessionConverter.toDto(tsEntity);
+        System.out.println("when ending session and converting entity to java class wpm its value is " + endedTs.getWpm());
+
         return endedTs;
     }
 

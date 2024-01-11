@@ -4,9 +4,9 @@ kumuluzee:
     name: dev
   version: 1.0.0
   server:
-    base-url: http://localhost:8080
+    base-url: http://localhost:8081
     http:
-      port: 8080
+      port: 8081
   datasources:
     - jndi-name: jdbc/GameplayDS
       connection-url: jdbc:postgresql://ep-royal-river-45970815.eu-central-1.aws.neon.tech/gameplay?user=tilenmiklavic&password=U65pDcNzgwuj&sslmode=require

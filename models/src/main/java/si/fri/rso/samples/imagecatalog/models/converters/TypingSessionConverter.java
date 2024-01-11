@@ -15,9 +15,10 @@ public class TypingSessionConverter {
         ts.setPunctuation(entity.isPunctuation());
         ts.setStartTime(entity.getStartTime());
         ts.setEndTime(entity.getEndTime());
-        ts.setLastUpdatedime(entity.getLastUpdateTime());
+        ts.setLastUpdateime(entity.getLastUpdateTime());
         ts.setStatus(entity.getStatus());
         ts.setWpm(entity.getWpm());
+        ts.setAccuracy(entity.getAccuracy());
 
         return ts;
 
@@ -34,7 +35,8 @@ public class TypingSessionConverter {
         entity.setLastUpdateTime(ts.getLastUpdateTime());
         entity.setEndTime(ts.getEndTime());
         entity.setStatus(ts.getStatus());
-        entity.setWpm(entity.getWpm());
+        entity.setWpm(ts.getWpm());
+        entity.setAccuracy(ts.getAccuracy());
 
 
         return entity;

@@ -27,10 +27,12 @@ public class TypingSession {
 
     public TypingSession() {
 //        this.id = UUID.randomUUID().toString();
+        Instant now = Instant.now();
         this.textToType = "";
-        this.startTime = Instant.now(); // Initialize with the current time
+        this.startTime = now; // Initialize with the current time
+        this.lastUpdateTime = now;
         this.endTime = null; // Initialize as null, to be set when the session ends
-        this.wpm = 0.0; // Initialize with a default value, e.g., 0.0
+        this.wpm = null; // Initialize with a default value, e.g., 0.0
         this.status = "in progress"; // Initialize with a default status, e.g., "new"
     }
 
@@ -92,7 +94,7 @@ public class TypingSession {
         return lastUpdateTime;
     }
 
-    public void setLastUpdatedime(Instant lastUpdateTime) {
+    public void setLastUpdateime(Instant lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
 
