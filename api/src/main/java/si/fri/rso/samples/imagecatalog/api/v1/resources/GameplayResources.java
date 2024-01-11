@@ -46,9 +46,9 @@ public class GameplayResources {
     protected UriInfo uriInfo;
 
     // Create an instance of the GeneratorClient
-    private GeneratorClient generatorClient = new GeneratorClient("http://localhost:807");
+    private GeneratorClient generatorClient = new GeneratorClient("http://20.240.34.248/generator");
 
-    private ReportClient reportClient = new ReportClient("http://localhost:8080");
+    private ReportClient reportClient = new ReportClient("http://20.240.34.248/reports");
 
     private int MAX_ALLOWED_WPM = 80;
 
