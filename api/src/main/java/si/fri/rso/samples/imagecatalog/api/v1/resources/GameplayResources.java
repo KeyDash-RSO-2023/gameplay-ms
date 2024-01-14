@@ -138,8 +138,8 @@ public class GameplayResources {
 
         // Check if the reported WPM is within an acceptable range
         double allowedWpmVariance = 5.0; // Allow a variance of 5 WPM
-        double minAllowedWpm = typingSession.getWpm() - allowedWpmVariance;
-        double maxAllowedWpm = typingSession.getWpm() + allowedWpmVariance;
+        double minAllowedWpm = progress.getCurrentWpm() - allowedWpmVariance;
+        double maxAllowedWpm = progress.getCurrentWpm() + allowedWpmVariance;
 
         Duration timeSinceStart = Duration.between(typingSession.getStartTime(), now);
         double numberOfWords = progress.getTypedText().length() / 4.7; // Constant for average word
