@@ -154,6 +154,8 @@ public class GameplayResources {
         // Calculate the number of correctly typed characters
         String textToType = typingSession.getTextToType();
         String typedText = progress.getTypedText();
+        System.out.println("text to type: " + textToType);
+        System.out.println("typed text: " + typedText);
         int correctCharCount = 0;
 
         for (int i = 0; i < Math.min(textToType.length(), typedText.length()); i++) {
