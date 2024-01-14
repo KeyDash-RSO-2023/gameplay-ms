@@ -122,7 +122,10 @@ public class GameplayResources {
         }
 
         // Perform validation checks
-        boolean isValid = validateProgress(ts, progress);
+        boolean isValid = true;
+        if (ts.getLastUpdateTime() != null) {
+            isValid = validateProgress(ts, progress);
+        }
 
         TypingSession updatedTs = typingSessionBean.updateTypingSession(ts, isValid, progress.getCurrentWpm(), progress.getAccuracy());
 
