@@ -151,6 +151,7 @@ public class GameplayResources {
         Duration timeSinceStart = Duration.between(typingSession.getStartTime(), now);
         double numberOfWords = progress.getTypedText().length() / 4.7; // Constant for average word
         double calculatedWpm = numberOfWords / timeSinceStart.getSeconds() * 60;
+        System.out.println("typed text: " + progress.getTypedText());
         System.out.println(calculatedWpm);
         System.out.println(minAllowedWpm);
         System.out.println(maxAllowedWpm);
