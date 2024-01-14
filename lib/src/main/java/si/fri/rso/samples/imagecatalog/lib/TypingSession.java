@@ -30,7 +30,7 @@ public class TypingSession {
         Instant now = Instant.now();
         this.textToType = "";
         this.startTime = now; // Initialize with the current time
-        this.lastUpdateTime = now;
+//        this.lastUpdateTime = now;
         this.endTime = null; // Initialize as null, to be set when the session ends
         this.wpm = null; // Initialize with a default value, e.g., 0.0
         this.status = "in progress"; // Initialize with a default status, e.g., "new"
