@@ -83,12 +83,15 @@ public class TypingSessionBean {
             tsEntity.setStatus("invalid");
         }
 
+        tsEntity.setWpm(wpm);
+        tsEntity.setAccuracy(accuracy);
+
+        // For the first update we also change the start time
+        System.out.println(tsEntity.getLastUpdateTime());
         if (tsEntity.getLastUpdateTime() == null) {
             System.out.println("Changing starting time");
             tsEntity.setStartTime(Instant.now());
         }
-        tsEntity.setWpm(wpm);
-        tsEntity.setAccuracy(accuracy);
         tsEntity.setLastUpdateTime(Instant.now());
 
         try {
