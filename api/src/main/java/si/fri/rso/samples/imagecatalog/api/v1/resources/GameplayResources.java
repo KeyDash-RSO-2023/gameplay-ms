@@ -139,7 +139,13 @@ public class GameplayResources {
         Duration timeSinceLastUpdate = Duration.between(typingSession.getLastUpdateTime(), now);
         Duration timeSinceStart = Duration.between(typingSession.getStartTime(), now);
 
+        System.out.println("last update time " + typingSession.getLastUpdateTime());
         System.out.println("Time since last update " + timeSinceLastUpdate);
+
+        System.out.println("start time " + typingSession.getStartTime());
+        System.out.println("Time since start " + timeSinceStart);
+
+
         if (timeSinceStart.getSeconds() < 5) {
             System.out.println("Discarding starting update");
             return true;
