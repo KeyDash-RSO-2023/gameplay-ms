@@ -171,7 +171,7 @@ public class GameplayResources {
         double minAllowedWpm = progress.getCurrentWpm() - allowedWpmVariance;
         double maxAllowedWpm = progress.getCurrentWpm() + allowedWpmVariance;
 
-        System.out.println("Time since start " + timeSinceStart);
+        System.out.println("Time since start " + timeSinceStart.getSeconds());
         System.out.println("Characters typed " +  correctCharCount);
 //        System.out.println(calculatedWpm);
 //        System.out.println(minAllowedWpm);
