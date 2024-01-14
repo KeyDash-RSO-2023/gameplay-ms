@@ -142,11 +142,11 @@ public class GameplayResources {
         Duration timeSinceLastUpdate = Duration.between(typingSession.getLastUpdateTime(), now);
         Duration timeSinceStart = Duration.between(typingSession.getStartTime(), now);
 
-        if (timeSinceStart.getSeconds() < 5) {
+        if (timeSinceStart.toMillis() < 500) {
             System.out.println("Discarding starting update");
             return true;
         }
-        if (timeSinceLastUpdate.getSeconds() > 7.5) {
+        if (timeSinceLastUpdate.toMillis() > 750) {
             System.out.println("more than allowd time passed");
             return false;
         }
@@ -164,14 +164,15 @@ public class GameplayResources {
         // Calculate WPM based on correctly typed characters
         double wordsPerCharacter = 1 / 4.7; // Assuming an average word length of 4.7 characters
         double numberOfWords = correctCharCount * wordsPerCharacter;
-        double calculatedWpm = numberOfWords / timeSinceStart.getSeconds() * 60;
+        double calculatedWpm = (numberOfWords / (timeSinceStart.toMillis() / 1000.0)) * 60; // Convert milliseconds to seconds for WPM calculation
+
 
         // Check if the reported WPM is within an acceptable range
         double allowedWpmVariance = 5.0; // Allow a variance of 5 WPM
         double minAllowedWpm = progress.getCurrentWpm() - allowedWpmVariance;
         double maxAllowedWpm = progress.getCurrentWpm() + allowedWpmVariance;
 
-        System.out.println("Time since start " + timeSinceStart.getSeconds());
+        System.out.println("Time since start " + timeSinceStart.toMillis());
         System.out.println("Characters typed " +  correctCharCount);
 //        System.out.println(calculatedWpm);
 //        System.out.println(minAllowedWpm);
