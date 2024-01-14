@@ -88,6 +88,12 @@ public class GameplayResources {
     public Response endTypingSession(@PathParam("typingSessionId") long typingSessionId, @RequestBody String typedText) {
         TypingSession ts = typingSessionBean.getTypingSession(typingSessionId);
 
+        System.out.println("Ending session with status " + ts.getStatus());
+        if (ts.getStatus() == "invalid") {
+            System.out.println("Not saving session, which was invalidated");
+            return Response.status(Response.Status.BAD_REQUEST).entity("Typing session was invalidated.").build();
+        }
+
         if (ts == null) {
             // If the session doesn't exist, return a NOT FOUND response
             return Response.status(Response.Status.NOT_FOUND).entity("Typing session not found.").build();
@@ -145,6 +151,8 @@ public class GameplayResources {
         double numberOfWords = progress.getTypedText().length() / 4.7; // Constant for average word
         double calculatedWpm = numberOfWords / timeSinceStart.getSeconds() * 60;
         System.out.println("Calculated wpm " +  calculatedWpm);
+        System.out.println("MIn wpm " + minAllowedWpm);
+        System.out.println("Max wpm " + maxAllowedWpm);
 
         if (calculatedWpm < minAllowedWpm || calculatedWpm > maxAllowedWpm) {
             return false;
