@@ -52,6 +52,14 @@ public class GameplayResources {
 
     private int MAX_ALLOWED_WPM = 80;
 
+    @GET
+    @Path("/get/{typingSessionId}")
+    @Produces(MediaType.APPLICATION_JSON) // This annotation specifies that the response will be in JSON format.
+    public Response getTypingSessionRecords(@PathParam("typingSessionId") long typingSessionId) {
+        List<TypingSession> tss = typingSessionBean.getAllRecordsForTypingSession(typingSessionId);
+
+        return typingSessionArrayResponse(tss);
+    }
 
     @GET
     @Path("/new")
@@ -151,6 +159,29 @@ public class GameplayResources {
         responseMap.put("startTime", ts.getStartTime());
         responseMap.put("endTime", ts.getEndTime());
         responseMap.put("status", ts.getStatus());
+
+        // Build the response with the map.
+        return Response
+                .status(Response.Status.OK)
+                .entity(responseMap)
+                .build();
+    }
+
+    public Response typingSessionArrayResponse(List<TypingSession> tss) {
+        Map<String, Object> responseMap = new HashMap<>();
+
+        for (int i = 0; i < tss.size(); i++) {
+            TypingSession ts = tss.get(i);
+            Map<String, Object> tsMap = new HashMap<>();
+            tsMap.put("typingSessionId", ts.getTypingSessionId());
+            tsMap.put("textToType", ts.getTextToType());
+            tsMap.put("startTime", ts.getStartTime());
+            tsMap.put("endTime", ts.getEndTime());
+            tsMap.put("status", ts.getStatus());
+            responseMap.put(String.valueOf(i+1), ts);
+        }
+        // Create a map to hold the desired properties.
+
 
         // Build the response with the map.
         return Response

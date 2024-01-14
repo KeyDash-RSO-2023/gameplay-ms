@@ -18,11 +18,11 @@ public class CustomHealthCheck implements HealthCheck {
     @Override
     public HealthCheckResponse call() {
         if (restProperties.getBroken()) {
-            System.out.println("Custom liveness healthcheck passed.");
+//            System.out.println("Custom liveness healthcheck failed.");
             return HealthCheckResponse.down(CustomHealthCheck.class.getSimpleName());
         }
         else {
-            System.out.println("Custom liveness healthcheck failed.");
+//            System.out.println("Custom liveness healthcheck passed.");
             return HealthCheckResponse.up(CustomHealthCheck.class.getSimpleName());
         }
     }

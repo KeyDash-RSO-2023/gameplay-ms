@@ -31,7 +31,21 @@ public class TypingSessionBean {
     @Inject
     private EntityManager em;
 
-   public TypingSession createTypingSession(TypingSession ts) {
+    public List<TypingSession> getAllRecordsForTypingSession(long typingSessionId) {
+        TypedQuery<TypingSessionEntity> query = em.createQuery(
+                "SELECT t FROM TypingSessionEntity t WHERE t.typingSessionId = :typingSessionId", TypingSessionEntity.class);
+        query.setParameter("typingSessionId", typingSessionId);
+
+        List<TypingSessionEntity> records = query.getResultList();
+        System.out.println("Size of the updates:" + records.size());
+        return records.stream()
+                .map(TypingSessionConverter::toDto)
+                .collect(Collectors.toList());
+    }
+
+
+
+    public TypingSession createTypingSession(TypingSession ts) {
        TypingSessionEntity tsEntity = TypingSessionConverter.toEntity(ts);
 
        try {
@@ -50,7 +64,6 @@ public class TypingSessionBean {
 
         TypingSessionEntity tsEntity = em.find(TypingSessionEntity.class, typingSessionId);
 
-        System.out.println("in the getter wpm is " + tsEntity.getWpm());
 
         if (tsEntity == null) {
             throw new NotFoundException();
@@ -73,7 +86,6 @@ public class TypingSessionBean {
         tsEntity.setWpm(wpm);
         tsEntity.setAccuracy(accuracy);
         tsEntity.setLastUpdateTime(Instant.now());
-        System.out.println("updating this id: " + ts.getTypingSessionId());
 
         try {
             beginTx();
@@ -111,10 +123,7 @@ public class TypingSessionBean {
             rollbackTx();
         }
 
-        System.out.println("the original wpm is " + tsEntity.getWpm());
-        System.out.println("when ending session and reading wpm its value is " + tsEntity.getWpm());
         TypingSession endedTs = TypingSessionConverter.toDto(tsEntity);
-        System.out.println("when ending session and converting entity to java class wpm its value is " + endedTs.getWpm());
 
         return endedTs;
     }
