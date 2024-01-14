@@ -158,6 +158,7 @@ public class GameplayResources {
 
         for (int i = 0; i < Math.min(textToType.length(), typedText.length()); i++) {
             if (textToType.charAt(i) == typedText.charAt(i)) {
+                System.out.println(textToType.charAt(i) + "==" + typedText.charAt(i));
                 correctCharCount++;
             }
         }
