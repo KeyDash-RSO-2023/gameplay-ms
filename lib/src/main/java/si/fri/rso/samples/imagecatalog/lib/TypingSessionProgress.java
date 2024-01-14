@@ -31,7 +31,7 @@ public class TypingSessionProgress {
         return typedText;
     }
 
-    public void setTypedText(int typedWords) {
+    public void setTypedText(String typedText) {
         this.typedText = typedText;
     }
 
