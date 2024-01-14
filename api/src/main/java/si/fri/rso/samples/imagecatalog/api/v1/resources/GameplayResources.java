@@ -23,6 +23,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,12 +107,9 @@ public class GameplayResources {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateTypingSession(@PathParam("typingSessionId") long typingSessionId, TypingSessionProgress progress) {
-        System.out.println("updating session");
-        System.out.println(progress.getAccuracy());
-        System.out.println("wpm " + progress.getCurrentWpm());
-        // Retrieve the existing typing session from the database
-
+        // Retrieve the existing typing session
         TypingSession ts = typingSessionBean.getTypingSession(typingSessionId);
+
 
         if (ts == null) {
             // If the session doesn't exist, return a NOT FOUND response
@@ -130,11 +129,31 @@ public class GameplayResources {
     }
 
     private boolean validateProgress(TypingSession typingSession, TypingSessionProgress progress) {
-        if (progress.getCurrentWpm() > MAX_ALLOWED_WPM) {
+        // Check if the last update was within the last 5 seconds
+        Instant now = Instant.now();
+        Duration timeSinceLastUpdate = Duration.between(typingSession.getLastUpdateTime(), now);
+        System.out.println("Time since last update " + timeSinceLastUpdate);
+        if (timeSinceLastUpdate.getSeconds() > 7.5) {
             return false;
         }
+
+        // Check if the reported WPM is within an acceptable range
+        double allowedWpmVariance = 5.0; // Allow a variance of 5 WPM
+        double minAllowedWpm = typingSession.getWpm() - allowedWpmVariance;
+        double maxAllowedWpm = typingSession.getWpm() + allowedWpmVariance;
+
+        Duration timeSinceStart = Duration.between(typingSession.getStartTime(), now);
+        double numberOfWords = progress.getTypedWords() / 4.7; // Constant for average word
+        double calculatedWpm = numberOfWords / timeSinceStart.getSeconds() * 60;
+        System.out.println("Calculated wpm " +  calculatedWpm);
+
+        if (calculatedWpm < minAllowedWpm || calculatedWpm > maxAllowedWpm) {
+            return false;
+        }
+
         return true;
     }
+
 
     @POST
     @Path("/cancel/{typingSessionId}")
