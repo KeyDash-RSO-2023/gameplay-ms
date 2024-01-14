@@ -158,13 +158,26 @@ public class GameplayResources {
             return false;
         }
 
+        // Calculate the number of correctly typed characters
+        String textToType = typingSession.getTextToType();
+        String typedText = progress.getTypedText();
+        int correctCharCount = 0;
+
+        for (int i = 0; i < Math.min(textToType.length(), typedText.length()); i++) {
+            if (textToType.charAt(i) == typedText.charAt(i)) {
+                correctCharCount++;
+            }
+        }
+        // Calculate WPM based on correctly typed characters
+        double wordsPerCharacter = 1 / 4.7; // Assuming an average word length of 4.7 characters
+        double numberOfWords = correctCharCount * wordsPerCharacter;
+        double calculatedWpm = numberOfWords / timeSinceStart.getSeconds() * 60;
+
         // Check if the reported WPM is within an acceptable range
         double allowedWpmVariance = 5.0; // Allow a variance of 5 WPM
         double minAllowedWpm = progress.getCurrentWpm() - allowedWpmVariance;
         double maxAllowedWpm = progress.getCurrentWpm() + allowedWpmVariance;
 
-        double numberOfWords = progress.getTypedText().length() / 4.7; // Constant for average word
-        double calculatedWpm = numberOfWords / timeSinceStart.getSeconds() * 60;
         System.out.println("typed text: " + progress.getTypedText());
         System.out.println(calculatedWpm);
         System.out.println(minAllowedWpm);
