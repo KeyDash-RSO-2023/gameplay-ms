@@ -87,7 +87,6 @@ public class GameplayResources {
     @Path("/end/{typingSessionId}")
     public Response endTypingSession(@PathParam("typingSessionId") long typingSessionId, @RequestBody String typedText) {
         TypingSession ts = typingSessionBean.getTypingSession(typingSessionId);
-        System.out.println("when ending the session and getting typing session the wpm is " + ts.getWpm());
 
         if (ts == null) {
             // If the session doesn't exist, return a NOT FOUND response
@@ -143,7 +142,7 @@ public class GameplayResources {
         double maxAllowedWpm = typingSession.getWpm() + allowedWpmVariance;
 
         Duration timeSinceStart = Duration.between(typingSession.getStartTime(), now);
-        double numberOfWords = progress.getTypedWords() / 4.7; // Constant for average word
+        double numberOfWords = progress.getTypedText().length() / 4.7; // Constant for average word
         double calculatedWpm = numberOfWords / timeSinceStart.getSeconds() * 60;
         System.out.println("Calculated wpm " +  calculatedWpm);
 

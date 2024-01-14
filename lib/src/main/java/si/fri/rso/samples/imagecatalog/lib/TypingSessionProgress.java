@@ -3,7 +3,7 @@ package si.fri.rso.samples.imagecatalog.lib;
 public class TypingSessionProgress {
 
     private double currentWpm;
-    private int typedWords;
+    private String typedText;
     private double accuracy;
 
     // Default constructor
@@ -11,9 +11,9 @@ public class TypingSessionProgress {
     }
 
     // Parameterized constructor
-    public TypingSessionProgress(double currentWpm, int typedWords, double accuracy) {
+    public TypingSessionProgress(double currentWpm, String typedText, double accuracy) {
         this.currentWpm = currentWpm;
-        this.typedWords = typedWords;
+        this.typedText = typedText;
         this.accuracy = accuracy;
     }
 
@@ -27,12 +27,12 @@ public class TypingSessionProgress {
         this.currentWpm = currentWpm;
     }
 
-    public int getTypedWords() {
-        return typedWords;
+    public String getTypedText() {
+        return typedText;
     }
 
-    public void setTypedWords(int typedWords) {
-        this.typedWords = typedWords;
+    public void setTypedText(int typedWords) {
+        this.typedText = typedText;
     }
 
     public double getAccuracy() {
