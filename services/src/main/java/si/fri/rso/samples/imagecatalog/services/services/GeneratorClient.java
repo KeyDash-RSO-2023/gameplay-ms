@@ -20,7 +20,7 @@ public class GeneratorClient {
     }
 
     public String getTextToType(String language, int length, boolean punctuation) {
-        System.out.println(language + " " + length + " " + punctuation);
+        System.out.println("New session begining: " + language + " " + length + " " + punctuation);
         HttpClient client = HttpClient.newHttpClient();
 
         // URL encode the language parameter to handle special characters

@@ -89,7 +89,6 @@ public class TypingSessionBean {
         // For the first update we also change the start time
         System.out.println(tsEntity.getLastUpdateTime());
         if (tsEntity.getLastUpdateTime() == null) {
-            System.out.println("Changing starting time");
             tsEntity.setStartTime(Instant.now());
         }
         tsEntity.setLastUpdateTime(Instant.now());

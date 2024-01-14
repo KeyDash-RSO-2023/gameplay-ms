@@ -21,7 +21,6 @@ public class ReportClient {
     public String saveTypingSession(TypingSession ts) {
 
         System.out.println("saving typing session");
-        System.out.println("saved wpm is:" + ts.getWpm());
         HttpClient client = HttpClient.newHttpClient();
 
         // Create a JSON object to represent the typing session data

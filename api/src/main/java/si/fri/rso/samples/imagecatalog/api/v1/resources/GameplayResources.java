@@ -143,24 +143,20 @@ public class GameplayResources {
         Duration timeSinceStart = Duration.between(typingSession.getStartTime(), now);
 
         if (timeSinceStart.toMillis() < 5000) {
-            System.out.println("Discarding starting update");
             return true;
         }
         if (timeSinceLastUpdate.toMillis() > 7500) {
-            System.out.println("more than allowd time passed");
+            System.out.println("More time passed since last update than allowed, invalidating the session.");
             return false;
         }
 
         // Calculate the number of correctly typed characters
         String textToType = typingSession.getTextToType();
         String typedText = progress.getTypedText();
-        System.out.println("text to type: " + textToType);
-        System.out.println("typed text: " + typedText);
         int correctCharCount = 0;
 
         for (int i = 0; i < Math.min(textToType.length(), typedText.length()); i++) {
             if (textToType.charAt(i) == typedText.charAt(i)) {
-                System.out.println(textToType.charAt(i) + "==" + typedText.charAt(i));
                 correctCharCount++;
             }
         }
@@ -175,8 +171,8 @@ public class GameplayResources {
         double minAllowedWpm = progress.getCurrentWpm() - allowedWpmVariance;
         double maxAllowedWpm = progress.getCurrentWpm() + allowedWpmVariance;
 
-        System.out.println("Time since start " + timeSinceStart.toMillis());
-        System.out.println("Characters typed " +  correctCharCount);
+//        System.out.println("Time since start " + timeSinceStart.toMillis());
+//        System.out.println("Characters typed " +  correctCharCount);
 //        System.out.println(calculatedWpm);
 //        System.out.println(minAllowedWpm);
 //        System.out.println(maxAllowedWpm);
