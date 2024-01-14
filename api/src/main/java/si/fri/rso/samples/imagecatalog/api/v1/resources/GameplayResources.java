@@ -142,11 +142,11 @@ public class GameplayResources {
         Duration timeSinceLastUpdate = Duration.between(typingSession.getLastUpdateTime(), now);
         Duration timeSinceStart = Duration.between(typingSession.getStartTime(), now);
 
-        if (timeSinceStart.toMillis() < 500) {
+        if (timeSinceStart.toMillis() < 5000) {
             System.out.println("Discarding starting update");
             return true;
         }
-        if (timeSinceLastUpdate.toMillis() > 750) {
+        if (timeSinceLastUpdate.toMillis() > 7500) {
             System.out.println("more than allowd time passed");
             return false;
         }
