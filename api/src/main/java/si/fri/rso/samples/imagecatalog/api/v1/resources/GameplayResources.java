@@ -89,8 +89,8 @@ public class GameplayResources {
         TypingSession ts = typingSessionBean.getTypingSession(typingSessionId);
 
         System.out.println("Ending session with status " + ts.getStatus());
-        if (ts.getStatus() == "invalid") {
-            System.out.println("Not saving session, which was invalidated");
+        if (ts.getStatus() != "in progress") {
+            System.out.println("Not saving session, which was invalidated or cancelled");
             return Response.status(Response.Status.BAD_REQUEST).entity("Typing session was invalidated.").build();
         }
 
@@ -139,6 +139,7 @@ public class GameplayResources {
         Duration timeSinceLastUpdate = Duration.between(typingSession.getLastUpdateTime(), now);
         System.out.println("Time since last update " + timeSinceLastUpdate);
         if (timeSinceLastUpdate.getSeconds() > 7.5) {
+            System.out.println("more than allowd time passed");
             return false;
         }
 
@@ -150,9 +151,9 @@ public class GameplayResources {
         Duration timeSinceStart = Duration.between(typingSession.getStartTime(), now);
         double numberOfWords = progress.getTypedText().length() / 4.7; // Constant for average word
         double calculatedWpm = numberOfWords / timeSinceStart.getSeconds() * 60;
-        System.out.println("Calculated wpm " +  calculatedWpm);
-        System.out.println("MIn wpm " + minAllowedWpm);
-        System.out.println("Max wpm " + maxAllowedWpm);
+        System.out.println(calculatedWpm);
+        System.out.println(minAllowedWpm);
+        System.out.println(maxAllowedWpm);
 
         if (calculatedWpm < minAllowedWpm || calculatedWpm > maxAllowedWpm) {
             return false;
