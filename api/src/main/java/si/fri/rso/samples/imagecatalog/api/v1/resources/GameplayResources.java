@@ -142,13 +142,6 @@ public class GameplayResources {
         Duration timeSinceLastUpdate = Duration.between(typingSession.getLastUpdateTime(), now);
         Duration timeSinceStart = Duration.between(typingSession.getStartTime(), now);
 
-        System.out.println("last update time " + typingSession.getLastUpdateTime());
-        System.out.println("Time since last update " + timeSinceLastUpdate);
-
-        System.out.println("start time " + typingSession.getStartTime());
-        System.out.println("Time since start " + timeSinceStart);
-
-
         if (timeSinceStart.getSeconds() < 5) {
             System.out.println("Discarding starting update");
             return true;
@@ -178,10 +171,11 @@ public class GameplayResources {
         double minAllowedWpm = progress.getCurrentWpm() - allowedWpmVariance;
         double maxAllowedWpm = progress.getCurrentWpm() + allowedWpmVariance;
 
-        System.out.println("typed text: " + progress.getTypedText());
-        System.out.println(calculatedWpm);
-        System.out.println(minAllowedWpm);
-        System.out.println(maxAllowedWpm);
+        System.out.println("Time since start " + timeSinceStart);
+        System.out.println("Characters typed " +  correctCharCount);
+//        System.out.println(calculatedWpm);
+//        System.out.println(minAllowedWpm);
+//        System.out.println(maxAllowedWpm);
 
         if (calculatedWpm < minAllowedWpm || calculatedWpm > maxAllowedWpm) {
             return false;
