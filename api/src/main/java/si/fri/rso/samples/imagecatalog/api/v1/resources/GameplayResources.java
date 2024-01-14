@@ -137,7 +137,13 @@ public class GameplayResources {
         // Check if the last update was within the last 5 seconds
         Instant now = Instant.now();
         Duration timeSinceLastUpdate = Duration.between(typingSession.getLastUpdateTime(), now);
+        Duration timeSinceStart = Duration.between(typingSession.getStartTime(), now);
+
         System.out.println("Time since last update " + timeSinceLastUpdate);
+        if (timeSinceStart.getSeconds() < 5) {
+            System.out.println("Discarding starting update");
+            return true;
+        }
         if (timeSinceLastUpdate.getSeconds() > 7.5) {
             System.out.println("more than allowd time passed");
             return false;
@@ -148,7 +154,6 @@ public class GameplayResources {
         double minAllowedWpm = progress.getCurrentWpm() - allowedWpmVariance;
         double maxAllowedWpm = progress.getCurrentWpm() + allowedWpmVariance;
 
-        Duration timeSinceStart = Duration.between(typingSession.getStartTime(), now);
         double numberOfWords = progress.getTypedText().length() / 4.7; // Constant for average word
         double calculatedWpm = numberOfWords / timeSinceStart.getSeconds() * 60;
         System.out.println("typed text: " + progress.getTypedText());
