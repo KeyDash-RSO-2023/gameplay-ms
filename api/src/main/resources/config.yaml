@@ -9,9 +9,9 @@ kumuluzee:
       port: 8080
   datasources:
     - jndi-name: jdbc/GameplayDS
-      connection-url: jdbc:postgresql://ep-royal-river-45970815.eu-central-1.aws.neon.tech/gameplay?user=tilenmiklavic&password=U65pDcNzgwuj&sslmode=require
-      username: tilenmiklavic
-      password: U65pDcNzgwuj
+      connection-url: ${DB_CONNECTIONURL}
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
   health:
     checks:
       data-source-health-check:
