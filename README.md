@@ -53,4 +53,6 @@ kubectl get secrets
 kubectl describe secret pg-pass
 ```
 
+## Swagger
+API docs are available on path `/api-specs/ui`, for example `http://localhost:8080/api-specs/ui`
 
