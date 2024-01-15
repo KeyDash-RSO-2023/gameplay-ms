@@ -12,6 +12,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.rso.samples.imagecatalog.lib.TypingSession;
 import si.fri.rso.samples.imagecatalog.lib.TypingSessionProgress;
+import si.fri.rso.samples.imagecatalog.models.models.TypingSessionInput;
 import si.fri.rso.samples.imagecatalog.services.beans.TypingSessionBean;
 import si.fri.rso.samples.imagecatalog.services.services.GeneratorClient;
 import si.fri.rso.samples.imagecatalog.services.services.ReportClient;
@@ -85,7 +86,7 @@ public class GameplayResources {
 
     @POST
     @Path("/end/{typingSessionId}")
-    public Response endTypingSession(@PathParam("typingSessionId") long typingSessionId, @RequestBody String typedText) {
+    public Response endTypingSession(@PathParam("typingSessionId") long typingSessionId, @RequestBody TypingSessionInput input) {
         TypingSession ts = typingSessionBean.getTypingSession(typingSessionId);
 
         System.out.println("Ending session with status " + ts.getStatus());
@@ -101,7 +102,7 @@ public class GameplayResources {
 
         TypingSession endedTs = typingSessionBean.endTypingSession(ts);
 
-        reportClient.saveTypingSession(endedTs);
+        reportClient.saveTypingSession(endedTs, input.getUserId());
 
         return typingSessionResponse(endedTs);
 
