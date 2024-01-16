@@ -23,7 +23,7 @@ kumuluzee:
         url-pattern: /v1/images/*
   logs:
     config-file: '<?xml version="1.0" encoding="UTF-8"?>
-                            <Configuration name="gameplay" status="TRACE">
+                            <Configuration name="gameplay" status="ERROR">
                                 <Appenders>
                                     <Console name="console" target="SYSTEM_OUT">
                                         <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
