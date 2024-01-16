@@ -61,6 +61,8 @@ public class GameplayResources {
     public Response getTypingSessionRecords(@PathParam("typingSessionId") long typingSessionId) {
         logger.info("Well a new typing session was requested.");
         logger.warning("test");
+        logger.warning("this is a trace");
+
         List<TypingSession> tss = typingSessionBean.getAllRecordsForTypingSession(typingSessionId);
 
         return typingSessionArrayResponse(tss);
