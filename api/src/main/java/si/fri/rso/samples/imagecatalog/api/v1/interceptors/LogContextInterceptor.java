@@ -25,7 +25,7 @@ public class LogContextInterceptor {
         System.out.println("Intercepting method: " + context.getMethod().getName());
 
         String methodName = context.getMethod().getName();
-        ConfigurationUtil configurationUtil = ConfigurationUtil.getInstance();
+//        ConfigurationUtil configurationUtil = ConfigurationUtil.getInstance();
 
         HashMap<String, String> settings = new HashMap<>();
 
