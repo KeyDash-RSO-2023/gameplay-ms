@@ -24,13 +24,13 @@ kumuluzee:
         url-pattern: /v1/images/*
   logs:
     config-file: '<?xml version="1.0" encoding="UTF-8"?>
-                            <Configuration name="gameplay" status="WARN, ERROR, TRACE">
+                            <Configuration name="gameplay" status="ERROR">
                                 <Appenders>
                                     <Console name="console" target="SYSTEM_OUT">
                                         <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
                                     </Console>
                                     <Socket name="logstash" host="7092a7de-fa02-46f5-a10c-36378f703b7f-ls.logit.io"
-                                    port="21104" protocol="udp">
+                                    port="21104" protocol="tcp">
                                         <JSONLayout complete="false" compact="true" eventEol="true" charset="UTF-8" properties="true"/>
                                     </Socket>
                                 </Appenders>
