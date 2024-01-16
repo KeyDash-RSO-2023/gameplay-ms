@@ -60,7 +60,7 @@ public class GameplayResources {
     @Produces(MediaType.APPLICATION_JSON) // This annotation specifies that the response will be in JSON format.
     public Response getTypingSessionRecords(@PathParam("typingSessionId") long typingSessionId) {
         logger.info("Well a new typing session was requested.");
-
+        logger.warning("test");
         List<TypingSession> tss = typingSessionBean.getAllRecordsForTypingSession(typingSessionId);
 
         return typingSessionArrayResponse(tss);
