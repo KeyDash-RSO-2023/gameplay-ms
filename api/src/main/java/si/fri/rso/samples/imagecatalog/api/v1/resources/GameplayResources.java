@@ -1,5 +1,7 @@
 package si.fri.rso.samples.imagecatalog.api.v1.resources;
 
+import com.kumuluz.ee.logs.LogManager;
+import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
@@ -29,7 +31,6 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 
 @Log
@@ -39,7 +40,8 @@ import java.util.logging.Logger;
 @Consumes(MediaType.APPLICATION_JSON)
 public class GameplayResources {
 
-    private Logger logger = Logger.getLogger(GameplayResources.class.getName());
+//    private Logger logger = Logger.getLogger(GameplayResources.class.getName());
+private static final Logger LOG = LogManager.getLogger(GameplayResources.class.getName());
 
     @Inject
     private TypingSessionBean typingSessionBean;
@@ -53,15 +55,13 @@ public class GameplayResources {
 
     private ReportClient reportClient = new ReportClient("http://20.240.34.248/reports");
 
-    private int MAX_ALLOWED_WPM = 80;
-
     @GET
     @Path("/get/{typingSessionId}")
     @Produces(MediaType.APPLICATION_JSON) // This annotation specifies that the response will be in JSON format.
     public Response getTypingSessionRecords(@PathParam("typingSessionId") long typingSessionId) {
-        logger.info("Well a new typing session was requested.");
-        logger.warning("test");
-        logger.fine("this is a trace");
+        LOG.trace("Well a new typing session was requested and this is a trace.");
+        LOG.warn("this is a warn");
+        LOG.info("this is a info");
 
         List<TypingSession> tss = typingSessionBean.getAllRecordsForTypingSession(typingSessionId);
 
