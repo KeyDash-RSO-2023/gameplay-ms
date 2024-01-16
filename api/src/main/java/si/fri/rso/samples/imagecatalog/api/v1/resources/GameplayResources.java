@@ -81,9 +81,9 @@ public class GameplayResources {
     })
     @Produces(MediaType.APPLICATION_JSON) // This annotation specifies that the response will be in JSON format.
     public Response getNewTypingSession(@QueryParam("language") String language, @QueryParam("length") int length, @QueryParam("punctuation") boolean punctuation) {
-        LOG.trace("Well a new typing session was requested and this is a trace.");
-        LOG.warn("this is a warn");
-        LOG.info("this is a info");
+        logger.fine("Well a new typing session was requested and this is a trace.");
+        logger.warning("this is a warn");
+        logger.info("this is a info");
         // Retrieve the random text to type
         String textToType = generatorClient.getTextToType(language, length, punctuation);
 
