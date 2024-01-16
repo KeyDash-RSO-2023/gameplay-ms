@@ -18,7 +18,7 @@ public class ReportClient {
         this.baseUrl = baseUrl;
     }
 
-    public String saveTypingSession(TypingSession ts) {
+    public String saveTypingSession(TypingSession ts, int userId) {
 
         System.out.println("saving typing session");
         HttpClient client = HttpClient.newHttpClient();
@@ -26,6 +26,7 @@ public class ReportClient {
         // Create a JSON object to represent the typing session data
         JSONObject json = new JSONObject();
         json.put("typingSessionId", ts.getTypingSessionId());
+        json.put("userId", userId);
         json.put("language", ts.getLanguage());
         json.put("length", ts.getLength());
         json.put("punctuation", ts.isPunctuation());
