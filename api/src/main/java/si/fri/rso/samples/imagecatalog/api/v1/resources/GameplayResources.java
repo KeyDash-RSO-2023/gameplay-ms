@@ -3,6 +3,8 @@ package si.fri.rso.samples.imagecatalog.api.v1.resources;
 import com.kumuluz.ee.logs.LogManager;
 //import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.headers.Header;
@@ -42,6 +44,8 @@ import java.util.logging.Logger;
 public class GameplayResources {
 
     private Logger logger = Logger.getLogger(GameplayResources.class.getName());
+    private static final Marker ENTRY_MARKER = MarkerManager.getMarker("ENTRY");
+    private static final Marker EXIT_MARKER = MarkerManager.getMarker("EXIT");
 //private static final Logger LOG = LogManager.getLogger(GameplayResources.class.getName());
 
     @Inject
@@ -81,9 +85,8 @@ public class GameplayResources {
     })
     @Produces(MediaType.APPLICATION_JSON) // This annotation specifies that the response will be in JSON format.
     public Response getNewTypingSession(@QueryParam("language") String language, @QueryParam("length") int length, @QueryParam("punctuation") boolean punctuation) {
-        logger.fine("Well a new typing session was requested and this is a trace.");
-        logger.warning("this is a warn");
-        logger.info("this is a info");
+        logger.info("Entering getNewTypingSession for new session with parameters: {" + language + length + "}");
+
         // Retrieve the random text to type
         String textToType = generatorClient.getTextToType(language, length, punctuation);
 
@@ -95,7 +98,7 @@ public class GameplayResources {
         ts.setTextToType(textToType);
 
         ts = typingSessionBean.createTypingSession(ts);
-
+        logger.info("Exiting getNewTypingSession with new session id: {" + ts.getTypingSessionId() + "}");
         return typingSessionResponse(ts);
     }
 
