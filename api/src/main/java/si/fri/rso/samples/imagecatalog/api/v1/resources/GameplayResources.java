@@ -109,7 +109,7 @@ public class GameplayResources {
                             schema = @Schema(implementation = TypingSession.class))
             ),
             @APIResponse(responseCode = "400", description = "Bad request, session already ended or invalid"),
-            @APIResponse(responseCode = "404", description = "Typing session not found")
+                @APIResponse(responseCode = "404", description = "Typing session not found")
     })
     @Path("/end/{typingSessionId}")
     public Response endTypingSession(@PathParam("typingSessionId") long typingSessionId, @RequestBody TypingSessionInput input) {

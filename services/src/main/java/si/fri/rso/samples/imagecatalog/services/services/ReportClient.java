@@ -40,7 +40,8 @@ public class ReportClient {
         String requestBody = json.toString();
 
         // Build the final URI
-        URI uri = URI.create(this.baseUrl + "/reports");
+        URI uri = URI.create(this.baseUrl + "/v1/reports");
+//        URI uri = URI.create("http://localhost:8085/v1/reports");
 
         // Build the HttpRequest with the POST method and the JSON body
         HttpRequest request = HttpRequest.newBuilder()
