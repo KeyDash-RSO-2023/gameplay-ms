@@ -117,22 +117,31 @@ public class GameplayResources {
     })
     @Path("/end/{typingSessionId}")
     public Response endTypingSession(@PathParam("typingSessionId") long typingSessionId, @RequestBody TypingSessionInput input) {
+        logger.info("Entering endTypingSession with id: {" + typingSessionId + "}");
+
         TypingSession ts = typingSessionBean.getTypingSession(typingSessionId);
 
         System.out.println("Ending session with status " + ts.getStatus());
         if (ts.getStatus() != "in progress") {
             System.out.println("Not saving session, which was invalidated or cancelled");
+            logger.warning("Ending endTypingSession with anti-hack detected id: {" + typingSessionId + "}");
+
             return Response.status(Response.Status.BAD_REQUEST).entity("Typing session was invalidated.").build();
         }
 
         if (ts == null) {
             // If the session doesn't exist, return a NOT FOUND response
+            logger.warning("Ending endTypingSession with typing session not found: {" + typingSessionId + "}");
+
             return Response.status(Response.Status.NOT_FOUND).entity("Typing session not found.").build();
         }
 
         TypingSession endedTs = typingSessionBean.endTypingSession(ts);
 
         reportClient.saveTypingSession(endedTs, input.getUserId());
+
+        logger.info("Ending endTypingSession successfully: {" + typingSessionId + "}");
+
 
         return typingSessionResponse(endedTs);
 
@@ -155,12 +164,16 @@ public class GameplayResources {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateTypingSession(@PathParam("typingSessionId") long typingSessionId, TypingSessionProgress progress) {
+        logger.info("Entering updateTypingSession with id: {" + typingSessionId + "}");
+
         // Retrieve the existing typing session
         TypingSession ts = typingSessionBean.getTypingSession(typingSessionId);
 
 
         if (ts == null) {
             // If the session doesn't exist, return a NOT FOUND response
+            logger.warning("Ending updateTypingSession with not found with id: {" + typingSessionId + "}");
+
             return Response.status(Response.Status.NOT_FOUND).entity("Typing session not found.").build();
         }
 
@@ -173,8 +186,11 @@ public class GameplayResources {
         TypingSession updatedTs = typingSessionBean.updateTypingSession(ts, isValid, progress.getCurrentWpm(), progress.getAccuracy());
 
         if (!isValid) {
+            logger.warning("Ending updateTypingSession with anti-hack detected with id: {" + typingSessionId + "}");
+
             return Response.status(Response.Status.BAD_REQUEST).entity("Session invalidated due to irregular activity").build();
         }
+        logger.warning("Ending updateTypingSession successfully with id: {" + typingSessionId + "}");
 
         return typingSessionResponse(updatedTs);
     }
@@ -242,15 +258,21 @@ public class GameplayResources {
     })
     @Path("/cancel/{typingSessionId}")
     public Response cancelTypingSession(@PathParam("typingSessionId") long typingSessionId) {
+        logger.info("Entering cancelTypingSession with id: {" + typingSessionId + "}");
 
         TypingSession ts = typingSessionBean.getTypingSession(typingSessionId);
 
         if (ts == null) {
+            logger.warning("Ending cancelTypingSession with not found with id: {" + typingSessionId + "}");
+
             // If the session doesn't exist, return a NOT FOUND response
             return Response.status(Response.Status.NOT_FOUND).entity("Typing session not found.").build();
         }
 
         TypingSession cancelledTs = typingSessionBean.cancelTypingSession(ts);
+
+        logger.info("Ending cancelTypingSession successfully with id: {" + typingSessionId + "}");
+
         return typingSessionResponse(cancelledTs);
     }
 
