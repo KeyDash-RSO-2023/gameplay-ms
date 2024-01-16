@@ -23,8 +23,6 @@ public class LogContextInterceptor {
 
         ConfigurationUtil configurationUtil = ConfigurationUtil.getInstance();
 
-        System.out.println("im logging motherfuckers");
-
         HashMap settings = new HashMap();
 
         settings.put("environmentType", EeConfig.getInstance().getEnv().getName());
