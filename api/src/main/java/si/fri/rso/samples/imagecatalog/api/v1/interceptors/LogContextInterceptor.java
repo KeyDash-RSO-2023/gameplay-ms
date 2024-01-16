@@ -21,20 +21,39 @@ public class LogContextInterceptor {
     @AroundInvoke
     public Object logMethodEntryAndExit(InvocationContext context) throws Exception {
 
+        // Debug: Print information about the intercepted method
+        System.out.println("Intercepting method: " + context.getMethod().getName());
+
         ConfigurationUtil configurationUtil = ConfigurationUtil.getInstance();
 
-        HashMap settings = new HashMap();
+        HashMap<String, String> settings = new HashMap<>();
 
         settings.put("environmentType", EeConfig.getInstance().getEnv().getName());
         settings.put("applicationName", EeConfig.getInstance().getName());
         settings.put("applicationVersion", EeConfig.getInstance().getVersion());
         settings.put("uniqueInstanceId", EeRuntime.getInstance().getInstanceId());
-
         settings.put("uniqueRequestId", UUID.randomUUID().toString());
 
+        // Debug: Print the settings to be added to the logging context
+        System.out.println("Logging context settings: " + settings);
+
         try (final CloseableThreadContext.Instance ctc = CloseableThreadContext.putAll(settings)) {
+            // Debug: Print a message before proceeding with the method invocation
+            System.out.println("Before proceeding with the intercepted method.");
+
             Object result = context.proceed();
+
+            // Debug: Print a message after the method invocation
+            System.out.println("After proceeding with the intercepted method.");
+
             return result;
+        } catch (Exception e) {
+            // Debug: Print the exception if something goes wrong
+            System.out.println("Exception in intercepted method: " + e.getMessage());
+            throw e;
+        } finally {
+            // Debug: Print a message when the logging context is closed
+            System.out.println("Logging context closed.");
         }
     }
 }
