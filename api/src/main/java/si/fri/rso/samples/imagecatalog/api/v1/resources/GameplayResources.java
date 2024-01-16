@@ -39,7 +39,7 @@ import java.util.logging.Logger;
 @Consumes(MediaType.APPLICATION_JSON)
 public class GameplayResources {
 
-    private Logger log = Logger.getLogger(GameplayResources.class.getName());
+    private Logger logger = Logger.getLogger(GameplayResources.class.getName());
 
     @Inject
     private TypingSessionBean typingSessionBean;
@@ -59,6 +59,8 @@ public class GameplayResources {
     @Path("/get/{typingSessionId}")
     @Produces(MediaType.APPLICATION_JSON) // This annotation specifies that the response will be in JSON format.
     public Response getTypingSessionRecords(@PathParam("typingSessionId") long typingSessionId) {
+        logger.info("Well a new typing session was requested.");
+
         List<TypingSession> tss = typingSessionBean.getAllRecordsForTypingSession(typingSessionId);
 
         return typingSessionArrayResponse(tss);
