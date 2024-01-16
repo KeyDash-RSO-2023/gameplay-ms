@@ -37,11 +37,13 @@ kumuluzee:
                                 <Loggers>
                                     <!-- Default logger -->
                                     <Root level="all">
-                                        <AppenderRef ref="logstash" level="info" />
+                                        
                                         <AppenderRef ref="console" level="trace" />
                                     </Root>
                                 </Loggers>
                             </Configuration>'
 rest-properties:
   broken: false
+
+#  <AppenderRef ref="logstash" level="info" />
 

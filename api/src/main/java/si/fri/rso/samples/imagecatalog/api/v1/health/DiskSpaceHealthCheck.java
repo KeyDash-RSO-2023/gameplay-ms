@@ -19,10 +19,8 @@ public class DiskSpaceHealthCheck implements HealthCheck {
         long freeSpace = disk.getUsableSpace();
 
         if (freeSpace >= THRESHOLD) {
-//            System.out.println("Disk space liveness healthcheck passed.");
             return HealthCheckResponse.named("diskSpace").up().withData("freeSpaceInBytes", freeSpace).build();
         } else {
-//            System.out.println("Disk space liveness healthcheck failed.");
             return HealthCheckResponse.named("diskSpace").down().withData("freeSpaceInBytes", freeSpace).build();
         }
     }
