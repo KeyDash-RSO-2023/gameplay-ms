@@ -59,9 +59,7 @@ private static final Logger LOG = LogManager.getLogger(GameplayResources.class.g
     @Path("/get/{typingSessionId}")
     @Produces(MediaType.APPLICATION_JSON) // This annotation specifies that the response will be in JSON format.
     public Response getTypingSessionRecords(@PathParam("typingSessionId") long typingSessionId) {
-        LOG.trace("Well a new typing session was requested and this is a trace.");
-        LOG.warn("this is a warn");
-        LOG.info("this is a info");
+
 
         List<TypingSession> tss = typingSessionBean.getAllRecordsForTypingSession(typingSessionId);
 
@@ -82,7 +80,9 @@ private static final Logger LOG = LogManager.getLogger(GameplayResources.class.g
     })
     @Produces(MediaType.APPLICATION_JSON) // This annotation specifies that the response will be in JSON format.
     public Response getNewTypingSession(@QueryParam("language") String language, @QueryParam("length") int length, @QueryParam("punctuation") boolean punctuation) {
-
+        LOG.trace("Well a new typing session was requested and this is a trace.");
+        LOG.warn("this is a warn");
+        LOG.info("this is a info");
         // Retrieve the random text to type
         String textToType = generatorClient.getTextToType(language, length, punctuation);
 
