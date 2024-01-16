@@ -66,6 +66,16 @@ public class GameplayResources {
 
     @GET
     @Path("/new")
+    @Operation(summary = "Create New Typing Session",
+            description = "Starts a new typing session with specified parameters.")
+    @APIResponses({
+            @APIResponse(
+                    responseCode = "200",
+                    description = "New typing session created successfully",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = TypingSession.class))
+            )
+    })
     @Produces(MediaType.APPLICATION_JSON) // This annotation specifies that the response will be in JSON format.
     public Response getNewTypingSession(@QueryParam("language") String language, @QueryParam("length") int length, @QueryParam("punctuation") boolean punctuation) {
 
@@ -85,6 +95,18 @@ public class GameplayResources {
     }
 
     @POST
+    @Operation(summary = "End Typing Session",
+            description = "Ends a typing session and processes the results.")
+    @APIResponses({
+            @APIResponse(
+                    responseCode = "200",
+                    description = "Typing session ended successfully",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = TypingSession.class))
+            ),
+            @APIResponse(responseCode = "400", description = "Bad request, session already ended or invalid"),
+            @APIResponse(responseCode = "404", description = "Typing session not found")
+    })
     @Path("/end/{typingSessionId}")
     public Response endTypingSession(@PathParam("typingSessionId") long typingSessionId, @RequestBody TypingSessionInput input) {
         TypingSession ts = typingSessionBean.getTypingSession(typingSessionId);
@@ -110,6 +132,18 @@ public class GameplayResources {
 
     @POST
     @Path("/update/{typingSessionId}")
+    @Operation(summary = "Update Typing Session",
+            description = "Anti-hack detection system validating the session ant updating the WPM.")
+    @APIResponses({
+            @APIResponse(
+                    responseCode = "200",
+                    description = "Typing session updated successfully",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = TypingSession.class))
+            ),
+            @APIResponse(responseCode = "400", description = "Typing session invalidated due to anti-hack"),
+            @APIResponse(responseCode = "404", description = "Typing session not found")
+    })
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateTypingSession(@PathParam("typingSessionId") long typingSessionId, TypingSessionProgress progress) {
@@ -187,6 +221,17 @@ public class GameplayResources {
 
 
     @POST
+    @Operation(summary = "Cancel Typing Session",
+            description = "Cancels a typing session.")
+    @APIResponses({
+            @APIResponse(
+                    responseCode = "200",
+                    description = "Typing session cancelled successfully",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = TypingSession.class))
+            ),
+            @APIResponse(responseCode = "404", description = "Typing session not found")
+    })
     @Path("/cancel/{typingSessionId}")
     public Response cancelTypingSession(@PathParam("typingSessionId") long typingSessionId) {
 
