@@ -1,7 +1,7 @@
 package si.fri.rso.samples.imagecatalog.api.v1.resources;
 
 import com.kumuluz.ee.logs.LogManager;
-import com.kumuluz.ee.logs.Logger;
+//import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
@@ -31,6 +31,7 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 
 @Log
@@ -40,8 +41,8 @@ import java.util.Map;
 @Consumes(MediaType.APPLICATION_JSON)
 public class GameplayResources {
 
-//    private Logger logger = Logger.getLogger(GameplayResources.class.getName());
-private static final Logger LOG = LogManager.getLogger(GameplayResources.class.getName());
+    private Logger logger = Logger.getLogger(GameplayResources.class.getName());
+//private static final Logger LOG = LogManager.getLogger(GameplayResources.class.getName());
 
     @Inject
     private TypingSessionBean typingSessionBean;
