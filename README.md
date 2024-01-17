@@ -55,5 +55,5 @@ kubectl describe secret pg-pass
 
 ## Swagger
 API docs are available on path `/openapi`. For UI, use path `/api-specs/ui`, for example `http://localhost:8080/api-specs/ui`
-http://51.12.152.201/gameplay/api-specs/ui/?url=http://20.240.34.248/gameplay/openapi&oauth2RedirectUrl=http://20.240.34.248/gameplay/api-specs/ui/oauth2-redirect.html
-http://51.12.152.201/gameplay/openapi
+[Swagger](http://51.12.152.201/gameplay/api-specs/ui/?url=http://51.12.152.201/gameplay/openapi&oauth2RedirectUrl=http://51.12.152.201/gameplay/api-specs/ui/oauth2-redirect.html)
+[Open API](http://51.12.152.201/gameplay/openapi)
